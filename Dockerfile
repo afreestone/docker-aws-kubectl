@@ -1,4 +1,8 @@
-FROM alpine:latest
+# Pinned to a current Alpine release for reproducible builds. The aws-cli it
+# ships must be >= 2.15: EKS Pod Identity serves credentials from
+# http://169.254.170.23/v1/credentials, and only aws-cli >= 2.15 allows that
+# host. Older versions reject it with "Unsupported host '169.254.170.23'".
+FROM alpine:3.21
 
 RUN apk add --no-cache aws-cli curl
 # This needs the community repo enabled
